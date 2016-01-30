@@ -20,25 +20,56 @@ import java.util.List;
 public class PageActivity extends Activity {
     private LocalActivityManager lam;
     private ViewPager viewPager;
+    SlidingMenu sm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pager_layout);
         viewPager = (ViewPager) findViewById(R.id.pager);
+
         lam = new LocalActivityManager(this,true);
         lam.dispatchCreate(savedInstanceState);//该方法必须被调用 否则activity转化为view会报错
         initActivities();
+        initSlidingMenu();
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //让viewPager第一页的时候滑出slidingMenu，第二页滑动回到第一页
+                switch (position){
+                    case 0:
+                        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                        break;
+                    default:
+                        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+    }
+
+    private void initSlidingMenu() {
         //实例化一个slidingmenu
-        SlidingMenu sm = new SlidingMenu(this);
+        sm = new SlidingMenu(this);
         sm.setMode(SlidingMenu.LEFT);
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         sm.setShadowDrawable(R.drawable.shadow);
         sm.setShadowWidthRes(R.dimen.shadow_width);
         sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         sm.attachToActivity(this,SlidingMenu.SLIDING_CONTENT);
-        sm.setMenu(R.layout.test_slidingmenu);
-        TextView tv = (TextView) findViewById(R.id.tv_slingdingmenu);
-
+        sm.setMenu(R.layout.navigation_layout);
+        new NavigationHandler(this,sm);//实现导航页的动画 写在单独的类中
     }
 
     private void initActivities() {
