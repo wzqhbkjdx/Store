@@ -1,7 +1,5 @@
 package com.cgtrc.bym.a10001store;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -9,8 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cgtrc.bym.a10001store.adapter.IAskFragmentAdapter;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by BYM on 2016/1/27.
