@@ -31,5 +31,10 @@ public class Constants {
 	public static final String NAVIGATION_STRING_ACTION_KEY = "com_cgtrc_bym_a10001store_navigation_string_action_key";
 	
 	public static final String XUNFEI_APPID = "5212ef0a";
+
+	/**
+	 * 切换到爱问页面的广播
+	 */
+	public static final String IASK_ACTION = "com_cgtrc_bym_a10001store_IASK";
 	
 }

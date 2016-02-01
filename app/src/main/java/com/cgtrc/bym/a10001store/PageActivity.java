@@ -54,6 +54,7 @@ public class PageActivity extends Activity implements View.OnClickListener{
 
         registerBroadcast();
 
+
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -86,7 +87,9 @@ public class PageActivity extends Activity implements View.OnClickListener{
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(smReceiver);
-        smReceiver=null;
+        unregisterReceiver(IAskRececiver);
+        smReceiver = null;
+        IAskRececiver = null;
     }
 
     private void registerBroadcast() {
@@ -95,6 +98,10 @@ public class PageActivity extends Activity implements View.OnClickListener{
         smIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(smReceiver,smIntentFilter);
 
+        IntentFilter IAskIntentFilter = new IntentFilter(Constants.IASK_ACTION);
+        IAskIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(IAskRececiver,IAskIntentFilter);
+
     }
 
     private BroadcastReceiver smReceiver = new BroadcastReceiver() {
@@ -102,6 +109,15 @@ public class PageActivity extends Activity implements View.OnClickListener{
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(Constants.SLIDING_MENU_ACTION)){
                 sm.toggle();
+            }
+        }
+    };
+
+    private BroadcastReceiver IAskRececiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(Constants.IASK_ACTION)){
+                viewPager.setCurrentItem(1);
             }
         }
     };
