@@ -11,7 +11,7 @@ import com.cgtrc.bym.a10001store.adapter.IAskFragmentAdapter;
 /**
  * Created by BYM on 2016/1/27.
  */
-public class IAskActivity extends FragmentActivity implements View.OnClickListener{
+public class IAskActivity extends FragmentActivity implements View.OnClickListener {
     private ViewPager pager;
     private TextView iask_ask_text;
     private TextView iask_answer_text;
