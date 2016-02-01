@@ -36,6 +36,7 @@ public class WelcomActivity extends Activity {
                 //动画执行完毕后，将当前动画跳转到PageActivity
                 Intent intent = new Intent(WelcomActivity.this,PageActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override

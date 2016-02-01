@@ -3,7 +3,10 @@ package com.cgtrc.bym.a10001store;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.LocalActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.cgtrc.bym.a10001store.adapter.ViewPagerAdapter;
+import com.cgtrc.bym.a10001store.utils.Constants;
 import com.cgtrc.bym.a10001store.utils.DensityUtil;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -45,8 +49,10 @@ public class PageActivity extends Activity implements View.OnClickListener{
         initSlidingMenu();
         topDownAnim = AnimationUtils.loadAnimation(this,R.anim.top_down);//加载动画资源
         topUpAnim = AnimationUtils.loadAnimation(this,R.anim.top_up);
-        topDownAnim.setAnimationListener(topDownAnimListener);
+        topDownAnim.setAnimationListener(topDownAnimListener);//设置动画执行后的监听处理
         topUpAnim.setAnimationListener(topUpAnimListener);
+
+        registerBroadcast();
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,6 +81,30 @@ public class PageActivity extends Activity implements View.OnClickListener{
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(smReceiver);
+        smReceiver=null;
+    }
+
+    private void registerBroadcast() {
+        //接收来自MainActivity的广播 打开slidingMenu
+        IntentFilter smIntentFilter = new IntentFilter(Constants.SLIDING_MENU_ACTION);
+        smIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(smReceiver,smIntentFilter);
+
+    }
+
+    private BroadcastReceiver smReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(Constants.SLIDING_MENU_ACTION)){
+                sm.toggle();
+            }
+        }
+    };
 
     private void initView() {
         viewPager = (ViewPager) findViewById(R.id.pager);
