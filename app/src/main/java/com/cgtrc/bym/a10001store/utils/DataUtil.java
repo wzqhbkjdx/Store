@@ -1,6 +1,7 @@
 package com.cgtrc.bym.a10001store.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by BYM on 2016/1/31.
@@ -11,6 +12,10 @@ public class DataUtil {
 
     public static SimpleDateFormat getSimpleDateFormat() {
         return sdf;
+    }
+
+    public static String getCurrentTime(){
+        return sdf.format(new Date());
     }
 
 }

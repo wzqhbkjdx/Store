@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.cgtrc.bym.a10001store.R;
 import com.cgtrc.bym.a10001store.adapter.IAskAdapter;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -93,7 +95,8 @@ public class IAskAnswerFragment extends Fragment implements XListView.IXListView
             ask.setAnswerCount(5);
             list.add(ask);
             Collections.sort(list,comparator);
-
+            //显示上次更新的时间
+            listView.setRefreshTime(sdf.format(new Date()));
 
             adapter.notifyDataSetChanged();//通知adapter更新
             listView.stopRefresh();//让下拉刷新的效果消失

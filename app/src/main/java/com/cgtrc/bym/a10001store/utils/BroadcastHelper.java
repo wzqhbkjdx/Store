@@ -6,7 +6,7 @@ import android.content.Intent;
 public class BroadcastHelper {
 
 	/**
-	 * ��������ʶ�����Ĺ㲥
+	 * 发送语音识别的广播
 	 * @param context
 	 * @param content
 	 */
@@ -19,7 +19,7 @@ public class BroadcastHelper {
 	}
 	
 	/**
-	 * ����String ���͵�ֵ�Ĺ㲥
+	 * 发送Sting类型的值的广播
 	 * @param context
 	 * @param action
 	 * @param key

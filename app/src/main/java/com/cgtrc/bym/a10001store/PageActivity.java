@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.cgtrc.bym.a10001store.adapter.ViewPagerAdapter;
+import com.cgtrc.bym.a10001store.utils.BroadcastHelper;
 import com.cgtrc.bym.a10001store.utils.Constants;
 import com.cgtrc.bym.a10001store.utils.DensityUtil;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -86,6 +87,10 @@ public class PageActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //MainActivity的生命周期和PageAcitivity的生命周期绑定，所以PageActivity的生命周期结束的时候，要通知MainActivity
+        //解除对BroadcastReceiver的注册
+        BroadcastHelper.sendBroadCast(getApplicationContext(),Constants.ACTIVITY_DESTORY_ACTION,null,null);
+
         unregisterReceiver(smReceiver);
         unregisterReceiver(IAskRececiver);
         smReceiver = null;
